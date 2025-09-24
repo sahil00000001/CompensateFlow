@@ -12,6 +12,8 @@ import Reviews from "@/pages/reviews";
 import Approvals from "@/pages/approvals";
 import Analytics from "@/pages/analytics";
 import Settings from "@/pages/settings";
+import SelfAssessment from "@/pages/self-assessment";
+import Feedback from "@/pages/feedback";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -25,6 +27,8 @@ function Router() {
           <Route path="/" component={Dashboard} />
           <Route path="/employees" component={Employees} />
           <Route path="/reviews" component={Reviews} />
+          <Route path="/self-assessment" component={SelfAssessment} />
+          <Route path="/feedback" component={Feedback} />
           <Route path="/approvals" component={Approvals} />
           <Route path="/analytics" component={Analytics} />
           <Route path="/settings" component={Settings} />

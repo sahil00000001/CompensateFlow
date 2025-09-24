@@ -1,16 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useLocation } from "wouter";
+import { ExternalLink } from "lucide-react";
 
 export default function ProcessTimeline() {
+  const [location, setLocation] = useLocation();
   const timelineItems = [
     {
       title: "Self Assessment",
       period: "Jan 15 - Feb 15",
       status: "completed",
+      link: "/self-assessment",
     },
     {
       title: "360° Feedback",
       period: "Feb 16 - Mar 15",
       status: "completed",
+      link: "/feedback",
     },
     {
       title: "Manager Reviews",
@@ -57,27 +63,44 @@ export default function ProcessTimeline() {
                   <div className="h-2 w-2 bg-muted-foreground rounded-full"></div>
                 )}
               </div>
-              <div className="flex-1" data-testid={`timeline-item-${item.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>
-                <p className={`font-medium ${
-                  item.status === 'pending' || item.status === 'upcoming' 
-                    ? 'text-muted-foreground' 
-                    : 'text-foreground'
-                }`}>
-                  {item.title}
-                </p>
-                <p className="text-sm text-muted-foreground">{item.period}</p>
-                <p className={`text-xs mt-1 ${
-                  item.status === 'completed' 
-                    ? 'text-green-600' 
-                    : item.status === 'in-progress'
-                    ? 'text-primary'
-                    : 'text-muted-foreground'
-                }`}>
-                  {item.status === 'completed' && 'Completed'}
-                  {item.status === 'in-progress' && `In Progress (${item.progress})`}
-                  {item.status === 'upcoming' && 'Upcoming'}
-                  {item.status === 'pending' && 'Pending'}
-                </p>
+              <div className="flex-1">
+                <div 
+                  className={`p-3 rounded-lg transition-colors ${
+                    (item as any).link ? 'cursor-pointer hover:bg-muted' : ''
+                  }`}
+                  data-testid={`timeline-item-${item.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                  onClick={() => {
+                    if ((item as any).link) {
+                      setLocation((item as any).link);
+                    }
+                  }}
+                >
+                  <div className="flex items-center justify-between">
+                    <p className={`font-medium ${
+                      item.status === 'pending' || item.status === 'upcoming' 
+                        ? 'text-muted-foreground' 
+                        : 'text-foreground'
+                    }`}>
+                      {item.title}
+                    </p>
+                    {(item as any).link && (
+                      <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground">{item.period}</p>
+                  <p className={`text-xs mt-1 ${
+                    item.status === 'completed' 
+                      ? 'text-green-600' 
+                      : item.status === 'in-progress'
+                      ? 'text-primary'
+                      : 'text-muted-foreground'
+                  }`}>
+                    {item.status === 'completed' && 'Completed'}
+                    {item.status === 'in-progress' && `In Progress (${item.progress})`}
+                    {item.status === 'upcoming' && 'Upcoming'}
+                    {item.status === 'pending' && 'Pending'}
+                  </p>
+                </div>
               </div>
             </div>
           ))}

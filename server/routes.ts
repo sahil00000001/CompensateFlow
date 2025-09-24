@@ -171,6 +171,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get('/api/reviews/current', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const cycle = await storage.getActiveReviewCycle();
+      
+      if (!cycle) {
+        return res.json(null);
+      }
+
+      const review = await storage.getEmployeeReview(userId, cycle.id);
+      
+      res.json({
+        cycleName: cycle.name,
+        selfAssessmentData: review?.selfAssessmentData || null,
+        status: review?.status || 'not_started',
+        reviewId: review?.id,
+      });
+    } catch (error) {
+      console.error("Error fetching current review:", error);
+      res.status(500).json({ message: "Failed to fetch current review" });
+    }
+  });
+
   app.post('/api/reviews/self-assessment', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
@@ -254,6 +277,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching pending feedback:", error);
       res.status(500).json({ message: "Failed to fetch pending feedback" });
+    }
+  });
+
+  app.get('/api/feedback/targets', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      const cycle = await storage.getActiveReviewCycle();
+      
+      if (!cycle || !user) {
+        return res.json([]);
+      }
+
+      // Get team members for 360-degree feedback
+      const targets = [];
+      
+      if (user.role === 'peer') {
+        // Peers can give feedback to other peers in the same team
+        const teamMembers = await storage.getUsersByManager(user.managerId!);
+        
+        for (const member of teamMembers) {
+          if (member.id !== userId) {
+            const review = await storage.getEmployeeReview(member.id, cycle.id);
+            if (review) {
+              // Check if feedback already given
+              const allFeedback = await storage.getFeedbackForReview(review.id);
+              const existingFeedback = allFeedback.find(f => f.feedbackFromId === userId);
+              
+              targets.push({
+                reviewId: review.id,
+                employeeName: `${member.firstName} ${member.lastName}`,
+                employeeRole: member.category || 'Employee',
+                department: member.department,
+                existingFeedback: existingFeedback,
+              });
+            }
+          }
+        }
+      }
+      
+      res.json(targets);
+    } catch (error) {
+      console.error("Error fetching feedback targets:", error);
+      res.status(500).json({ message: "Failed to fetch feedback targets" });
     }
   });
 
