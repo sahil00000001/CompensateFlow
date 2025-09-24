@@ -1,0 +1,489 @@
+Project Overview
+Build a complete web-based Increment Process Automation System for managing annual employee performance reviews, ratings, and salary increments across a hierarchical organization structure. The system must handle multi-level approvals, 360-degree feedback, self-assessments, one-on-one meetings, appeals, and maintain strict data privacy boundaries between hierarchy levels.
+Core Requirements
+1. User Hierarchy & Roles
+Create a system with the following hierarchical structure where each level has specific data access permissions:
+Hierarchy Levels (Top to Bottom):
+
+Harry (Founder): Ultimate authority, full system access, final approval power, can view/edit all data across all levels
+L1 Manager: Can access all L2, L3, and peer data, approval authority over L2 decisions
+L2 Manager: Can access all L3 and peer data, primary rating authority, conducts 1:1 meetings
+L3 Manager: Can access only peer data under their supervision, provides initial review comments
+Peers (4 Categories):
+
+Software Developer
+ML Engineer
+QA Engineer
+UI/UX Developer
+Each peer can ONLY see their own data, complete isolation from other peers' data
+
+
+
+2. Dashboard Requirements
+Universal Dashboard Features:
+
+Real-time process status tracker showing current stage for each employee
+Timeline view with all deadlines and milestones
+Notification center with unread count badge
+Quick action buttons based on user role
+Search functionality with filters
+Export capabilities (PDF/Excel) based on role permissions
+
+Role-Specific Dashboards:
+Harry's Dashboard:
+
+Organization-wide analytics with rating distribution charts
+Department-wise performance heatmap
+Pending approvals queue with one-click approve/reject
+Historical trend analysis (YoY comparisons)
+Budget impact calculator for increments
+Red flags/anomaly detection in ratings
+Quick access to any employee's complete review
+
+L1 Manager Dashboard:
+
+Approval pipeline view with pending items
+Team performance overview across L2 managers
+Rating consistency analysis
+Appeal status tracker
+Comparative analytics between departments
+Direct reports' status cards
+
+L2 Manager Dashboard:
+
+Active review queue with progress indicators
+1:1 meeting scheduler with calendar integration
+Rating worksheet with auto-calculation
+360-feedback aggregation view
+Appeal requests inbox
+Team rating distribution curve
+Pending self-assessments tracker
+
+L3 Manager Dashboard:
+
+Peer review assignment matrix
+Comment submission interface
+Team feedback summary
+Deadline reminders
+Progress tracker for assigned reviews
+
+Peer Dashboard:
+
+Personal review status with stage indicator
+Self-assessment form access
+360-feedback requests to complete
+Meeting notifications
+Rating visibility (once finalized)
+Appeal request button (one-time use)
+Document upload section
+
+3. Process Flow Implementation
+Phase 1: Initialization
+
+Admin interface to set review cycle timeline with:
+
+Start date, end date
+Phase-wise deadlines (self-assessment, feedback, review, meetings, approvals)
+Automatic reminder schedules
+Holiday calendar integration
+
+
+Bulk employee import with category assignment
+Automated hierarchy validation
+Email notification to all participants with timeline
+
+Phase 2: Form Management
+
+Dynamic form builder interface for L2 managers
+Category-specific form templates:
+Software Developer Form Fields:
+
+Technical skills assessment (languages, frameworks, tools)
+Code quality metrics
+Bug resolution rate
+Feature delivery count
+Technical documentation contributed
+Code review participation
+Innovation/optimization initiatives
+Learning certifications completed
+
+ML Engineer Form Fields:
+
+Model performance improvements
+Research papers/patents
+Algorithm optimization metrics
+Data pipeline contributions
+Experimentation velocity
+Production model deployments
+Knowledge sharing sessions conducted
+
+QA Engineer Form Fields:
+
+Test coverage achievements
+Bug detection efficiency
+Automation scripts created
+Test case documentation
+Critical bug discoveries
+Process improvement suggestions
+Cross-team collaboration
+
+UI/UX Developer Form Fields:
+
+Design portfolio submissions
+User satisfaction scores
+Accessibility improvements
+Design system contributions
+Prototypes delivered
+A/B test results
+Design review participation
+
+Common Fields for All:
+
+Educational qualifications added this year
+Professional achievements
+Current CTC (encrypted field)
+Expected CTC (encrypted field)
+Expected increment percentage
+Career goals
+Training needs identified
+Work-from-home preference
+Project contributions (dropdown from project list)
+Client feedback received
+Team collaboration rating
+Initiative and ownership examples
+Challenges faced and solutions
+Areas of improvement (self-identified)
+
+
+
+Phase 3: 360-Degree Feedback System
+
+Automated peer selection algorithm:
+
+Must select 4-5 peers minimum
+Algorithm considers: same team members, cross-functional collaborators, project overlaps
+Manager can override selections
+Selected peers receive automated email notification
+
+
+Anonymous feedback form with:
+
+Technical competence rating (1-5 scale)
+Communication skills
+Team collaboration
+Problem-solving ability
+Leadership potential
+Reliability and commitment
+Innovation and creativity
+Open text feedback (minimum 50 words)
+Areas of strength (mandatory)
+Areas needing improvement (optional)
+
+
+Feedback aggregation dashboard showing:
+
+Average scores per category
+Word cloud of common feedback themes
+Sentiment analysis of text feedback
+Response rate tracker
+
+
+
+Phase 4: Multi-Level Review Process
+L3 Manager Review Interface:
+
+Split-screen view: employee data on left, comment box on right
+Ability to view self-assessment and 360-feedback side by side
+Structured comment template:
+
+Performance summary
+Key achievements validation
+Areas of concern
+Recommendation for rating
+Development suggestions
+
+
+Save draft functionality
+Submit and lock mechanism
+Bulk review capability for multiple employees
+
+L2 Manager Rating Interface:
+
+Comprehensive employee view with all collected data
+Rating calculation worksheet showing:
+
+Self-assessment score (40% weight)
+360-feedback average (30% weight)
+L3 manager input (20% weight)
+KRA achievement (10% weight)
+
+
+Manual override option with mandatory justification
+Rating scale: 1-5 with descriptions
+
+5: Outstanding (Top 10%)
+4: Exceeds Expectations (Next 20%)
+3: Meets Expectations (Middle 40%)
+2: Needs Improvement (Next 20%)
+1: Unsatisfactory (Bottom 10%)
+
+
+Bell curve distribution checker
+Save draft and submit options
+
+Phase 5: One-on-One Meeting Management
+
+Integrated calendar showing manager and employee availability
+Automated meeting scheduler with:
+
+45-minute default slots
+Video conference link generation (Zoom/Teams/Google Meet)
+Agenda template auto-populated with discussion points
+Pre-meeting reminder (24 hours before)
+
+
+During-meeting interface:
+
+Rating display with breakdown
+Editable rating with real-time recalculation
+Note-taking section
+Action items tracker
+Screen sharing capability for data review
+
+
+Post-meeting:
+
+Meeting minutes auto-save
+Updated rating confirmation
+Email summary to employee
+
+
+
+Phase 6: Appeal Mechanism
+
+Appeal button (visible only if not used before)
+Appeal request form:
+
+Reason for disagreement
+Supporting documents upload
+Specific points of contention
+Desired outcome
+
+
+L2 manager appeal inbox with accept/reject options
+If accepted:
+
+Second meeting scheduler
+Appeal meeting has extended 60-minute slot
+Special appeals form for documentation
+Final rating lock after appeal
+
+
+Appeal tracking showing:
+
+Request date
+Status (pending/accepted/rejected/completed)
+Final outcome
+
+
+
+Phase 7: Approval Workflow
+
+L1 Manager approval interface:
+
+Bulk approval capability
+Rating distribution analytics
+Budget impact summary
+Comparison with previous year
+Override authority with audit trail
+Comment box for feedback to L2
+
+
+Harry's final approval interface:
+
+Executive summary dashboard
+Department-wise approval status
+One-click mass approval option
+Exception report for outliers
+Final sign-off mechanism
+
+
+
+Phase 8: Communication & Completion
+
+Automated congratulations email with:
+
+Final rating
+Increment percentage (if applicable)
+Next review date
+Manager's feedback summary
+Development plan
+
+
+HR system integration for:
+
+Salary update
+Record maintenance
+Letter generation
+Benefits adjustment
+
+
+
+4. Security & Privacy Features
+Data Access Control:
+
+Row-level security implementation
+API endpoint restrictions based on role
+Data encryption for sensitive fields (CTC, ratings)
+Session management with timeout
+IP whitelisting option
+Two-factor authentication for managers
+Audit log for every data access
+GDPR compliance features
+
+Privacy Boundaries:
+
+Peers cannot see each other's data (complete isolation)
+Anonymous feedback with no trace-back capability
+Separate database views for each role
+Data masking for unauthorized fields
+Secure document storage with access control
+
+5. Technical Specifications
+Performance Requirements:
+
+Support 1000+ concurrent users
+Page load time < 2 seconds
+Real-time notifications (WebSocket)
+Auto-save every 30 seconds
+Offline capability for form filling
+Mobile responsive design
+Progressive Web App (PWA) features
+
+Integration Requirements:
+
+SSO integration (SAML/OAuth)
+Email service (SMTP/SendGrid)
+Calendar systems (Google/Outlook)
+Video conferencing APIs
+HR systems (SAP/Workday)
+Document storage (S3/Azure Blob)
+Export to Excel/PDF
+Business intelligence tools
+
+Validation Rules:
+
+Mandatory field checking
+CTC range validation
+Rating distribution constraints
+Text length requirements
+File upload size limits (5MB)
+Allowed file formats (PDF, DOC, DOCX)
+Date range validations
+Duplicate submission prevention
+
+6. Advanced Features
+Analytics & Reporting:
+
+Real-time dashboard with KPIs
+Predictive analytics for performance trends
+Anomaly detection in ratings
+Department comparison reports
+Year-over-year analysis
+Export capabilities with custom filters
+Scheduled report generation
+Mobile app with push notifications
+
+Automation Features:
+
+Bulk operations for managers
+Automated reminder system
+Smart scheduling based on availability
+Auto-escalation for pending actions
+Workflow triggers for stage transitions
+Email template management
+Batch processing for large teams
+
+Quality Assurance:
+
+Rating consistency checker
+Bias detection algorithms
+Feedback quality scoring
+Completion rate tracking
+Time-spent analytics
+System health monitoring
+Error handling with user-friendly messages
+
+7. User Experience Requirements
+Interface Design:
+
+Clean, modern UI with company branding
+Dark/light mode toggle
+Accessibility compliance (WCAG 2.1 AA)
+Keyboard navigation support
+Screen reader compatibility
+Multi-language support
+Contextual help tooltips
+Interactive tutorials for first-time users
+
+Navigation Features:
+
+Breadcrumb navigation
+Quick search with filters
+Recent actions history
+Bookmark/favorite capability
+Customizable dashboard widgets
+Collapsible sidebar menu
+Floating action buttons
+Progress indicators for long operations
+
+8. Business Logic Rules
+Constraints:
+
+One review cycle per year
+Appeal only once per employee per cycle
+Minimum 3 feedback responses required
+L3 must review before L2 can rate
+L1 approval required before Harry
+48-hour cooling period after rating communication
+Automatic escalation after deadline
+Mandatory meeting before rating finalization
+
+Calculations:
+
+Rating weighted average formula
+Increment percentage based on rating and budget
+Prorated calculations for mid-year joiners
+Team average calculations
+Distribution curve enforcement
+Performance improvement plan triggers
+
+9. Edge Cases & Error Handling
+Scenarios to Handle:
+
+Manager change mid-cycle
+Employee resignation during review
+Insufficient 360-feedback responses
+Technical failures during submission
+Conflicting calendar schedules
+Network interruption during form filling
+Bulk upload errors
+Role changes during cycle
+Leave/absence during critical phases
+Data conflicts between systems
+
+10. Compliance & Audit
+Required Features:
+
+Complete audit trail with timestamps
+Data retention policy implementation
+Right to erasure (GDPR)
+Data portability options
+Consent management
+Regular backups
+Disaster recovery plan
+Security incident logging
+Compliance reporting
+Legal hold capabilities
+
+Generate a fully functional web application with all these features, ensuring seamless user experience, robust security, and complete implementation of the hierarchical data privacy model. The application should be production-ready with proper error handling, logging, monitoring, and should scale to handle enterprise-level usage.RetryClaude can make mistakes. Please double-check responses.
